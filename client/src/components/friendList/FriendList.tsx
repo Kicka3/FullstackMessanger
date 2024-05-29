@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import axios from 'axios'
 
+//Это прототип
 export const FriendsList = () => {
   const [friends, setFriends] = useState([])
 
@@ -19,7 +20,6 @@ export const FriendsList = () => {
   const removeFriend = async friendId => {
     try {
       await axios.delete(`/friends/${friendId}`)
-      // Обновление списка друзей после удаления
       fetchFriends()
     } catch (error) {
       console.error('Error removing friend:', error)
