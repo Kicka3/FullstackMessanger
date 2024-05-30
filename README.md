@@ -42,6 +42,16 @@ FullChat - это полнофункциональное приложение д
    pnpm install
    ```
 4. Создайте файл `.env` и настройте переменные окружения (например, подключение к базе данных и Redis).
+```DATABASE_NAME=whatsapp
+DATABASE_HOST=your_bd_host
+DATABASE_PASSWORD=your_db_pass
+DATABASE_USER=your_db_user
+DATABASE_PORT=your_localhost_port
+
+COOKIE_SECRET=your_secret_cookie
+```
+Чтобы зименить url клиента и сервера, перейдите в папку server/constants/port-constants
+
 5. Запустите сервер:
    ```bash
    pnpm dev
