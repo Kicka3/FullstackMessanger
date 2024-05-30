@@ -31,7 +31,7 @@ FullChat - это полнофункциональное приложение д
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/Kicka3/messanger/tree/master
+   git clone https://github.com/Kicka3/FullstackMessanger
    ```
 2. Перейдите в директорию проекта:
    ```bash
@@ -51,7 +51,7 @@ FullChat - это полнофункциональное приложение д
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/Kicka3/messanger/tree/master
+   git clone https://github.com/Kicka3/FullstackMessanger
    ```
 2. Перейдите в директорию проекта:
    ```bash
