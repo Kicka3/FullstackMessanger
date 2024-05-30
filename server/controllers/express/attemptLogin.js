@@ -32,47 +32,7 @@ const attemptLogin = async (req, res) => {
 
 module.exports = attemptLogin;
 
-
-//ВРОДЕ КАК РАБОЧИЙ НО НЕ ЛОГИНИТСЯ
-
-// const User = require("../../models/user/user.model");
-// const bcrypt = require("bcrypt");
-//
-// const attemptLogin = async (req, res) => {
-//   try {
-//     const potentialLogin = await User.findOne({
-//       where: { username: req.body.username },
-//     });
-//
-//     if (potentialLogin) {
-//       const isSamePass = await bcrypt.compare(
-//          req.body.password,
-//          potentialLogin.passhash
-//       );
-//
-//       if (isSamePass) {
-//         req.session.user = {
-//           username: req.body.username,
-//           id: potentialLogin.id,
-//           userid: potentialLogin.userid,
-//         };
-//         res.json({ loggedIn: true, username: req.body.username });
-//       } else {
-//         res.json({ loggedIn: false, status: "Wrong username or password!" });
-//         console.log("Не залогинен");
-//       }
-//     } else {
-//       console.log("Не залогинен");
-//       res.json({ loggedIn: false, status: "Wrong username or password!" });
-//     }
-//   } catch (error) {
-//     console.error("Ошибка при попытке входа:", error);
-//     res.status(500).json({ loggedIn: false, status: "Internal server error" });
-//   }
-// };
-//
-// module.exports = attemptLogin;
-
+//Проблема с доступом:
 // const User = require("../../models/user/user.model");
 // const bcrypt = require("bcrypt");
 //
