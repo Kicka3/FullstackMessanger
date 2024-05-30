@@ -27,6 +27,15 @@ FullChat - это полнофункциональное приложение д
 
 ## Установка и запуск
 
+0. Перед установкой создайте и настройте свою бд postgreSQL по типу (пример находится в файле server/database.sql):
+```CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(28) NOT NULL UNIQUE,
+    passhash VARCHAR NOT NULL,
+    userid VARCHAR NOT NULL UNIQUE
+);
+```
+
 ### Серверная часть
 
 1. Клонируйте репозиторий:
