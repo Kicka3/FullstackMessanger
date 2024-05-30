@@ -1,4 +1,4 @@
-﻿# FullstackMessanger - Full-Stack Chat Application
+﻿# Full stack Messenger - Full-Stack Chat Application
 
 ## Описание
 
