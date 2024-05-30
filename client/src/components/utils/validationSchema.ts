@@ -17,3 +17,10 @@ export const addFriendsValidationSchema = Yup.object({
     .min(4, 'Invalid username')
     .max(28, 'Invalid username'),
 })
+
+export const messageValidationSchema = Yup.object({
+  message: Yup.string()
+    .required('Message is required!')
+    .min(1, 'Message must not be empty!')
+    .max(255, 'Message too long!'),
+})

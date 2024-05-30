@@ -2,6 +2,7 @@ import React, { ReactNode, createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { BASE_SERV_URL } from '@/common/constants/constants'
+import axios from 'axios'
 
 export const AccountContext = createContext<
   | {
@@ -21,46 +22,38 @@ export const UserContext = ({ children }: Props) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch(`${BASE_SERV_URL}/auth/login`, {
-      credentials: 'include',
-    })
-      .catch(err => {
-        setUser({ loggedIn: false })
-        console.error(err)
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`${BASE_SERV_URL}/auth/login`, {
+          withCredentials: true,
+        })
 
-        return
-      })
-      .then(r => {
-        if (!r || !r.ok || r.status >= 400) {
+        if (response.status >= 400) {
           setUser({ loggedIn: false })
 
           return
         }
 
-        return r.json() as Promise<{ loggedIn: boolean }>
-      })
-      .then(data => {
-        if (!data) {
-          setUser({ loggedIn: false })
-
-          return
-        }
-        setUser({ ...data })
+        setUser({ ...response.data })
         navigate('/home')
-      })
+      } catch (error) {
+        console.error('Error fetching user:', error)
+        setUser({ loggedIn: false })
+      }
+    }
+
+    fetchUser()
   }, [])
 
-  const handleLogout = () => {
-    fetch(`${BASE_SERV_URL}/auth/logout`, {
-      credentials: 'include',
-      method: 'POST',
-    })
-      .then(() => {
-        navigate('/')
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${BASE_SERV_URL}/auth/logout`, null, {
+        withCredentials: true,
       })
-      .catch(error => {
-        console.error('Error during logout:', error)
-      })
+      navigate('/')
+    } catch (error) {
+      console.error('Error during logout:', error)
+    }
   }
 
   return (

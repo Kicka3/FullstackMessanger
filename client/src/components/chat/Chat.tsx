@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 
 import { FriendContextType, MessagesContextType } from '@/common/types'
 import { ChatBox } from '@/components/chat/ChatBox'
+import { FriendChat } from '@/components/chat/friendChat'
 import { FriendContext, MessagesContext } from '@/components/homePage'
 import { TabPanel, TabPanels, Text, VStack } from '@chakra-ui/react'
 
@@ -32,26 +33,8 @@ export const Chat = ({ userid }: Props) => {
             w={'100%'}
           >
             <div ref={bottomDiv} />
-            {messages
-              .filter(msg => msg.to === friend.userid || msg.from === friend.userid)
-              .map((message, idx) => (
-                <Text
-                  bg={message.to === friend.userid ? 'blue.100' : 'gray.100'}
-                  borderRadius={'10px'}
-                  color={'gray.800'}
-                  fontSize={'lg'}
-                  key={`msg:${friend.username}.${idx}`}
-                  m={
-                    message.to === friend.userid
-                      ? '1rem 0 0 auto !important'
-                      : '1rem auto 0 0 !important'
-                  }
-                  maxW={'50%'}
-                  p={'0.5rem 1rem'}
-                >
-                  {message.content}
-                </Text>
-              ))}
+
+            <FriendChat friend={friend} messages={messages} />
           </VStack>
         ))}
       </TabPanels>

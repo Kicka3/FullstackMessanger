@@ -1,6 +1,7 @@
 const redisClient = require("../redis");
 require("dotenv").config();
 const session = require("express-session");
+const constant = require("../constants/port-constants");
 const RedisStore = require("connect-redis")(session);
 
 const sessionMiddleware = session({
@@ -22,7 +23,7 @@ const wrap = expressMiddleware => (socket, next) =>
   expressMiddleware(socket.request, {}, next);
 
 const corsConfig = {
-  origin: "http://localhost:5173",
+  origin: constant.HOST_URL,
   credentials: true,
 };
 

@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import { AccountContext } from '@/appContext'
 import { BASE_SERV_URL } from '@/common/constants/constants'
 import { Button, ButtonGroup, Heading, Text, VStack } from '@chakra-ui/react'
+import axios from 'axios'
 import { Form, Formik } from 'formik'
 
 import { TextField } from '../textField/index.js'
 import { validationSchema } from '../utils/index.js'
 
 export const Login = () => {
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<null | string>(null)
 
   const navigate = useNavigate()
   const accountContext = useContext(AccountContext)
@@ -24,42 +25,33 @@ export const Login = () => {
   return (
     <Formik
       initialValues={{ password: '', username: '' }}
-      onSubmit={(values, actions) => {
+      onSubmit={async (values, actions) => {
         const vals = { ...values }
 
         actions.resetForm()
 
-        fetch(`${BASE_SERV_URL}/auth/login`, {
-          body: JSON.stringify(vals),
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-        })
-          .catch(err => {
-            console.error('Ошибка логина', err)
+        try {
+          const response = await axios.post(`${BASE_SERV_URL}/auth/login`, vals, {
+            withCredentials: true,
+          })
+
+          if (response.status >= 400) {
+            setError('Invalid username or password')
 
             return
-          })
-          .then(res => {
-            if (!res || !res.ok || res.status >= 400) {
-              return
-            }
+          }
 
-            return res.json()
-          })
-          .then(data => {
-            if (!data) {
-              return
-            }
-            setUser({ ...data })
-            if (data.status) {
-              setError(data.status)
-            } else if (data.loggedIn) {
-              navigate('/home')
-            }
-          })
+          setUser({ ...response.data })
+
+          if (!response.status) {
+            setError(response.data.status)
+          } else if (response.data.loggedIn) {
+            navigate('/home')
+          }
+        } catch (error) {
+          console.error('Error during login:', error)
+          setError('Failed to log in. Please try again later.')
+        }
       }}
       validationSchema={validationSchema}
     >

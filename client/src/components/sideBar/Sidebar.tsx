@@ -2,19 +2,9 @@ import { useContext } from 'react'
 
 import { AddFriendModal } from '@/components/addFriend'
 import { FriendContext } from '@/components/homePage'
+import { FriendListItem } from '@/components/sideBar/friendListItem'
 import { ChatIcon } from '@chakra-ui/icons'
-import {
-  Button,
-  Circle,
-  Divider,
-  HStack,
-  Heading,
-  Tab,
-  TabList,
-  Text,
-  VStack,
-  useDisclosure,
-} from '@chakra-ui/react'
+import { Button, Divider, HStack, Heading, TabList, VStack, useDisclosure } from '@chakra-ui/react'
 
 export const Sidebar = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
@@ -29,14 +19,6 @@ export const Sidebar = () => {
     onClose()
   }
 
-  const stringToBoolean = (value: boolean | string): boolean => {
-    if (typeof value === 'string') {
-      return value === 'true'
-    }
-
-    return value
-  }
-
   return (
     <>
       <VStack py={'1.4rem'}>
@@ -48,15 +30,7 @@ export const Sidebar = () => {
         </HStack>
         <Divider />
         <VStack as={TabList}>
-          {friendList.map(friend => (
-            <HStack as={Tab} key={`friend:${friend}`}>
-              <Circle
-                bg={stringToBoolean(friend.connected) ? 'green.700' : 'red.500'}
-                size={'12px'}
-              />
-              <Text>{friend.username}</Text>
-            </HStack>
-          ))}
+          <FriendListItem friendList={friendList} />
         </VStack>
       </VStack>
       {isOpen && <AddFriendModal isOpen={isOpen} onClose={onCloseModal} />}

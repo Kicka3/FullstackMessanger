@@ -7,10 +7,11 @@ import { TextField } from '@/components/textField'
 import { validationSchema } from '@/components/utils'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 import { Button, ButtonGroup, Heading, Text, VStack } from '@chakra-ui/react'
+import axios from 'axios'
 import { Form, Formik } from 'formik'
 
 export const SignUp = () => {
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<null | string>(null)
   const navigate = useNavigate()
 
   const setUserContext = useContext(AccountContext)
@@ -24,41 +25,37 @@ export const SignUp = () => {
   return (
     <Formik
       initialValues={{ password: '', username: '' }}
-      onSubmit={(values, actions) => {
+      onSubmit={async (values, actions) => {
         const vals = { ...values }
 
         actions.resetForm()
-        fetch(`${BASE_SERV_URL}/auth/signup`, {
-          body: JSON.stringify(vals),
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-        })
-          .catch(err => {
-            console.error(err)
+
+        try {
+          const response = await axios.post(`${BASE_SERV_URL}/auth/signup`, vals, {
+            withCredentials: true,
+          })
+
+          if (!response.data) {
+            return
+          }
+
+          if (response.data.status >= 400) {
+            setError('Username already exists or other registration error')
 
             return
-          })
-          .then(res => {
-            if (!res || !res.ok || res.status >= 400) {
-              return
-            }
+          }
 
-            return res.json()
-          })
-          .then(data => {
-            if (!data) {
-              return
-            }
-            setUser({ ...data })
-            if (data.status) {
-              setError(data.status)
-            } else if (data.loggedIn) {
-              navigate('/home')
-            }
-          })
+          setUser({ ...response.data })
+
+          if (response.data.status) {
+            setError(response.data.status)
+          } else if (response.data.loggedIn) {
+            navigate('/home')
+          }
+        } catch (error) {
+          console.error('Error during sign up:', error)
+          setError('Failed to create account. Please try again later.')
+        }
       }}
       validationSchema={validationSchema}
     >

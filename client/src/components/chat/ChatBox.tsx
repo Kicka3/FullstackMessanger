@@ -2,9 +2,9 @@ import { useContext } from 'react'
 
 import { socket } from '@/common/socket'
 import { MessagesContext } from '@/components/homePage'
+import { messageValidationSchema } from '@/components/utils'
 import { Button, HStack, Input } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
 
 type Props = {
   userid: string
@@ -29,9 +29,7 @@ export const ChatBox = ({ userid }: Props) => {
         setMessages(prevMsgs => [message, ...prevMsgs])
         actions.resetForm()
       }}
-      validationSchema={Yup.object({
-        message: Yup.string().min(1).max(255),
-      })}
+      validationSchema={messageValidationSchema}
     >
       <HStack as={Form} pb={'1.4rem'} px={'1.4rem'} w={'100%'}>
         <Input

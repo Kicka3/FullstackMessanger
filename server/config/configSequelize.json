@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "kicka",
+    "password": "2143",
+    "database": "whatsapp",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "kicka",
+    "password": "2143",
+    "database": "whatsapp",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "kicka",
+    "password": "2143",
+    "database": "whatsapp",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}

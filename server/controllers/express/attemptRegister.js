@@ -23,7 +23,7 @@ const attemptRegister = async (req, res) => {
 
     res.json({ loggedIn: true, username: req.body.username });
   } else {
-    res.json({ loggedIn: false, status: "Username taken" });
+    res.json({ loggedIn: false, status: "Username already exists, please choose another name" });
   }
 };
 

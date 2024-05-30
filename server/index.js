@@ -19,6 +19,13 @@ const {
 const server = require("http").createServer(app);
 const cookieParser = require('cookie-parser');
 const logoutRouter = require('./controllers/express/handleLogout');
+const constant = require("./constants/port-constants");
+const sequelize = require("./models/user/user.model");
+
+
+// sequelize.sync({ force: false }).then(() => {
+//   console.log('Model User was synchronized successfully.');
+// });
 
 const io = new Server(server, {
   cors: corsConfig,
@@ -50,7 +57,6 @@ io.on("connect", socket => {
 
 });
 
-const PORT = 4000;
-server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+server.listen(constant.SERVER_PORT, () => {
+  console.log(`Server listening on port ${constant.SERVER_PORT}`);
 });
