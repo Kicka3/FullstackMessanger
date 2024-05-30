@@ -26,6 +26,7 @@ export const useSocketSetup = ({ setFriendList, setMessages }: Props) => {
     })
     socket.on('dm', (message: Message) => {
       // Явно указываем тип параметра prevMsgs и тип возвращаемого значения
+      //@ts-ignore
       setMessages((prevMsgs: Message[]) => {
         if (!Array.isArray(prevMsgs)) {
           throw new Error('prevMsgs is not an array')
@@ -36,6 +37,7 @@ export const useSocketSetup = ({ setFriendList, setMessages }: Props) => {
     })
     socket.on('connected', (status, username) => {
       // Явно указываем тип параметра prevFriends и тип возвращаемого значения
+      //@ts-ignore
       setFriendList((prevFriends: User[]) => {
         return [...prevFriends].map(friend => {
           if (friend.username === username) {

@@ -22,11 +22,6 @@ const logoutRouter = require('./controllers/express/handleLogout');
 const constant = require("./constants/port-constants");
 const sequelize = require("./models/user/user.model");
 
-
-// sequelize.sync({ force: false }).then(() => {
-//   console.log('Model User was synchronized successfully.');
-// });
-
 const io = new Server(server, {
   cors: corsConfig,
 });
