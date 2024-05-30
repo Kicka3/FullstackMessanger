@@ -20,7 +20,6 @@ const server = require("http").createServer(app);
 const cookieParser = require('cookie-parser');
 const logoutRouter = require('./controllers/express/handleLogout');
 const constant = require("./constants/port-constants");
-const sequelize = require("./models/user/user.model");
 
 const io = new Server(server, {
   cors: corsConfig,
@@ -32,7 +31,7 @@ app.use(express.json());
 app.use(sessionMiddleware);
 app.use("/auth", authRouter);
 app.use(cookieParser());
-app.post("/auth/logout", logoutRouter)
+app.post("/auth/logout", logoutRouter);
 
 io.use(wrap(sessionMiddleware));
 io.use(authorizeUser);
@@ -47,8 +46,6 @@ io.on("connect", socket => {
   socket.on("dm", message => dm(socket, message));
 
   socket.on("disconnecting", () => onDisconnect(socket));
-
-
 
 });
 
