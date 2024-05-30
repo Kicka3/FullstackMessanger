@@ -27,6 +27,7 @@ type AddFriendResponse = { done: boolean; errorMsg?: string; newFriend?: User }
 
 export const AddFriendModal = ({ isOpen, onClose }: Props) => {
   const [error, setError] = useState('')
+
   const closeModal = useCallback(() => {
     setError('')
     onClose()
@@ -37,7 +38,6 @@ export const AddFriendModal = ({ isOpen, onClose }: Props) => {
   if (!friendContext) {
     return null
   }
-
   const { setFriendList } = friendContext
 
   return (

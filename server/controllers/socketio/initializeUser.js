@@ -6,17 +6,13 @@ const initializeUser = async socket => {
 
   socket.join(socket.user.userid);
 
-  // await redisClient.hset(
-  //   `userid:${socket.user.username}`,
-  //   "userid",
-  //   socket.user.userid,
-  //   "connected",
-  //   true
-  // );
-
-  //тут бага в online status
-  await redisClient.hset(`userid:${socket.user.username}`, "userid", socket.user.userid);
-  await redisClient.hset(`userid:${socket.user.username}`, "connected", true);
+  await redisClient.hmset(
+    `userid:${socket.user.username}`,
+    "userid",
+    socket.user.userid,
+    "connected",
+    true
+  );
 
   const friendList = await redisClient.lrange(
     `friends:${socket.user.username}`,
@@ -27,6 +23,7 @@ const initializeUser = async socket => {
   const friendRooms = parsedFriendList.map(friend => friend.userid);
 
   if (friendRooms.length > 0)
+
     socket.to(friendRooms).emit("connected", true, socket.user.username);
 
   socket.emit("friends", parsedFriendList);

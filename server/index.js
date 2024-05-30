@@ -34,6 +34,7 @@ app.post("/auth/logout", logoutRouter)
 
 io.use(wrap(sessionMiddleware));
 io.use(authorizeUser);
+
 io.on("connect", socket => {
   initializeUser(socket);
 
@@ -44,6 +45,9 @@ io.on("connect", socket => {
   socket.on("dm", message => dm(socket, message));
 
   socket.on("disconnecting", () => onDisconnect(socket));
+
+
+
 });
 
 const PORT = 4000;

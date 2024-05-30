@@ -3,8 +3,6 @@ const bcrypt = require("bcrypt");
 
 const attemptLogin = async (req, res) => {
 
-  console.log('Устанавливаем сессию пользователя:', req.session.user);
-
   const potentialLogin = await pool.query(
     "SELECT id, username, passhash, userid FROM users u WHERE u.username=$1",
     [req.body.username]

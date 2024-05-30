@@ -18,14 +18,24 @@ import {
 
 export const Sidebar = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
-
   const friendListContext = useContext(FriendContext)
 
   if (!friendListContext) {
     return null
   }
-
   const { friendList } = friendListContext
+
+  const onCloseModal = () => {
+    onClose()
+  }
+
+  const stringToBoolean = (value: boolean | string): boolean => {
+    if (typeof value === 'string') {
+      return value === 'true'
+    }
+
+    return value
+  }
 
   return (
     <>
@@ -40,13 +50,16 @@ export const Sidebar = () => {
         <VStack as={TabList}>
           {friendList.map(friend => (
             <HStack as={Tab} key={`friend:${friend}`}>
-              <Circle bg={friend.connected ? 'green.700' : 'red.500'} size={'12px'} />
+              <Circle
+                bg={stringToBoolean(friend.connected) ? 'green.700' : 'red.500'}
+                size={'12px'}
+              />
               <Text>{friend.username}</Text>
             </HStack>
           ))}
         </VStack>
       </VStack>
-      <AddFriendModal isOpen={isOpen} onClose={onClose} />
+      {isOpen && <AddFriendModal isOpen={isOpen} onClose={onCloseModal} />}
     </>
   )
 }
