@@ -32,18 +32,20 @@ const attemptLogin = async (req, res) => {
 
 module.exports = attemptLogin;
 
-//Проблема с доступом:
+// Через Sequelize Проблема с доступом:
 // const User = require("../../models/user/user.model");
 // const bcrypt = require("bcrypt");
 //
 // const attemptLogin = async (req, res) => {
 //   try {
-//     console.log(req.body.username);
+//     console.log('reqBody', req.body); // Выводим весь req.body
 //
 //     const potentialLogin = await User.findOne({
-//       where: { username: req.body.username.toLowerCase() },
+//       where: { username: req.body.username },
 //     });
-//     console.log('Username: ', potentialLogin); // Выводим потенциального пользователя
+//
+//     console.log('UsernamePotential: ', potentialLogin); // Выводим потенциального пользователя
+//
 //     if (potentialLogin) {
 //       console.log('Потенциальный пользователь найден:', potentialLogin.username);
 //       const isSamePass = await bcrypt.compare(

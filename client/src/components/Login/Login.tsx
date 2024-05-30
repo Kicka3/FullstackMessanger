@@ -28,6 +28,8 @@ export const Login = () => {
       onSubmit={async (values, actions) => {
         const vals = { ...values }
 
+        console.log(values)
+
         actions.resetForm()
 
         try {

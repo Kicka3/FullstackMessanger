@@ -16,6 +16,7 @@ const sequelize = new Sequelize(
    }
 );
 
+
 const User = sequelize.define('Users', {
    id: {
       type: Sequelize.INTEGER,
